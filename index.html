@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dos masas forzadas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="simulation" aria-label="Simulacion de dos masas acopladas">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">Tema 1</p>
+            <h1>Dos masas forzadas</h1>
+          </div>
+          <div class="equation" aria-label="Ecuaciones diferenciales del sistema">
+            <span>m1 x1'' + k(x1 - x2) = F0 cos(wt)</span>
+            <span>m2 x2'' + k(x2 - x1) = 0</span>
+          </div>
+        </div>
+
+        <canvas id="scene" width="1200" height="620" aria-label="Animacion y graficos del sistema"></canvas>
+
+        <div class="readout" aria-live="polite">
+          <span><strong>x1</strong><output id="x1Out">0.00</output> m</span>
+          <span><strong>x2</strong><output id="x2Out">0.00</output> m</span>
+          <span><strong>v1</strong><output id="v1Out">0.00</output> m/s</span>
+          <span><strong>v2</strong><output id="v2Out">0.00</output> m/s</span>
+          <span><strong>x2 - x1</strong><output id="stretchOut">0.00</output> m</span>
+          <span><strong>t</strong><output id="timeOut">0.00</output> s</span>
+        </div>
+      </section>
+
+      <aside class="controls" aria-label="Controles de parametros">
+        <div class="control-group">
+          <div class="button-row three">
+            <button id="playPause" type="button">Pausar</button>
+            <button id="reset" type="button" class="secondary">Reiniciar</button>
+            <button id="resonance" type="button" class="secondary">w = wn</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="mass1">Masa m1</label>
+          <input id="mass1" type="range" min="0.5" max="6" step="0.1" value="2" />
+          <output id="mass1Value">2.0 kg</output>
+        </div>
+
+        <div class="control-group">
+          <label for="mass2">Masa m2</label>
+          <input id="mass2" type="range" min="0.5" max="8" step="0.1" value="3" />
+          <output id="mass2Value">3.0 kg</output>
+        </div>
+
+        <div class="control-group">
+          <label for="stiffness">Constante k</label>
+          <input id="stiffness" type="range" min="5" max="150" step="1" value="75" />
+          <output id="stiffnessValue">75 N/m</output>
+        </div>
+
+        <div class="control-group">
+          <label for="force">Fuerza F0</label>
+          <input id="force" type="range" min="0" max="40" step="0.5" value="10" />
+          <output id="forceValue">10.0 N</output>
+        </div>
+
+        <div class="control-group">
+          <label for="driveFrequency">Frecuencia w</label>
+          <input id="driveFrequency" type="range" min="0.1" max="30" step="0.01" value="6" />
+          <output id="driveFrequencyValue">6.00 rad/s</output>
+        </div>
+
+        <div class="control-group">
+          <label for="initialStretch">Estiramiento inicial</label>
+          <input id="initialStretch" type="range" min="-2" max="2" step="0.05" value="0.8" />
+          <output id="initialStretchValue">0.80 m</output>
+        </div>
+
+        <div class="formula-panel">
+          <h2>Estado estacionario</h2>
+          <p>wn: <output id="naturalFrequency">7.91</output> rad/s</p>
+          <p>w / wn: <output id="frequencyRatio">0.76</output></p>
+          <p>|X1p|: <output id="amp1Out">0.00</output> m</p>
+          <p>|X2p|: <output id="amp2Out">0.00</output> m</p>
+          <p>Delta(w): <output id="denominatorOut">0.00</output></p>
+          <p>Resonancia: <output id="resonanceOut">no</output></p>
+        </div>
+
+        <div class="formula-panel">
+          <h2>Solucion usada</h2>
+          <p><span>C1:</span><output>0</output></p>
+          <p><span>B1:</span><output>0</output></p>
+          <p><span>A:</span><output id="naturalAOut">0.00</output> m</p>
+          <p><span>C2:</span><output id="offsetC2Out">0.00</output> m</p>
+          <p class="formula-line">x1(t) = C2 + A cos(wn t) + X1 cos(wt)</p>
+          <p class="formula-line">x2(t) = C2 - (m1/m2) A cos(wn t) + X2 cos(wt)</p>
+        </div>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
